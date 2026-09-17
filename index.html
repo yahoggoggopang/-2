@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>오늘의 왈왈이 운세</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+               "Noto Sans KR", sans-serif;
+  background: #cfeaff;
+  color: #202020;
+  display: flex;
+  justify-content: center;
+}
+
+.page {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  padding: 45px 22px;
+  text-align: center;
+
+  background:
+    radial-gradient(circle at -5% 15%, white 0 65px, transparent 67px),
+    radial-gradient(circle at 105% 30%, white 0 85px, transparent 87px),
+    #cfeaff;
+}
+
+/* 상단 */
+.small-title {
+  font-size: 13px;
+  letter-spacing: 3px;
+  font-weight: 700;
+  color: #3478bd;
+  margin-bottom: 8px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.25;
+}
+
+.subtitle {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #555;
+}
+
+/* 왈왈이 */
+.walwal {
+  width: 72%;
+  max-width: 280px;
+  margin: 28px auto 18px;
+  display: block;
+}
+
+/* 버튼 */
+button {
+  border: 0;
+  width: 100%;
+  padding: 17px 20px;
+  border-radius: 18px;
+  background: #428bd4;
+  color: white;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #2469ad;
+}
+
+button:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #2469ad;
+}
+
+.guide {
+  margin-top: 18px;
+  font-size: 12px;
+  color: #6e8ba7;
+}
+
+/* 결과 화면 */
+#resultPage {
+  display: none;
+}
+
+.ticket {
+  background: rgba(255,255,255,0.94);
+  border: 3px solid #428bd4;
+  border-radius: 25px;
+  padding: 27px 20px 24px;
+  margin-top: 20px;
+  box-shadow: 0 8px 0 rgba(53,120,187,0.15);
+}
+
+.ticket-top {
+  display: flex;
+  justify-content: space-between;
+  color: #428bd4;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.fortune-name {
+  font-size: 29px;
+  margin: 20px 0 0;
+}
+
+.result-img {
+  width: 65%;
+  max-width: 230px;
+  margin: 15px auto;
+}
+
+.score {
+  font-size: 19px;
+  font-weight: 800;
+  color: #3478bd;
+}
+
+.message {
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 18px 5px;
+}
+
+.info {
+  border-top: 1px dashed #8db7df;
+  border-bottom: 1px dashed #8db7df;
+  margin: 22px 0;
+  padding: 17px 0;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.info div {
+  padding: 0 5px;
+}
+
+.info strong {
+  display: block;
+  font-size: 10px;
+  color: #3478bd;
+  margin-bottom: 7px;
+}
+
+.info span {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.retry {
+  margin-top: 20px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- 첫 화면 -->
+<div class="page" id="startPage">
+
+  <div class="small-title">
+    TO LUCKY ISLAND
+  </div>
+
+  <h1>
+    오늘의<br>
+    왈왈이 운세
+  </h1>
+
+  <p class="subtitle">
+    오늘 왈왈이가 전해줄<br>
+    행운은 무엇일까요?
+  </p>
+
+  <img src="walwal.png"
+       class="walwal"
+       alt="왈왈이">
+
+  <button onclick="drawFortune()">
+    오늘의 운세 뽑기
+  </button>
+
+  <div class="guide">
+    버튼을 눌러 LUCKY ISLAND로 출발하세요!
+  </div>
+
+</div>
+
+
+<!-- 결과 화면 -->
+<div class="page" id="resultPage">
+
+  <div class="small-title">
+    LUCKY ISLAND ARRIVAL
+  </div>
+
+  <div class="ticket">
+
+    <div class="ticket-top">
+      <span>TODAY'S WALWAL</span>
+      <span id="number">NO.01</span>
+    </div>
+
+    <h2 class="fortune-name" id="fortuneName">
+      행운 왈왈이
+    </h2>
+
+    <img src="walwal.png"
+         class="result-img"
+         alt="왈왈이">
+
+    <div class="score" id="score">
+      오늘의 행운지수 92%
+    </div>
+
+    <p class="message" id="message">
+      오늘은 생각지도 못했던 곳에서
+      작은 행운이 찾아올지도 몰라요.
+    </p>
+
+    <div class="info">
+
+      <div>
+        <strong>LUCKY COLOR</strong>
+        <span id="color">BLUE</span>
+      </div>
+
+      <div>
+        <strong>LUCKY ITEM</strong>
+        <span id="item">TICKET</span>
+      </div>
+
+      <div>
+        <strong>WALWAL POWER</strong>
+        <span id="power">★★★★★</span>
+      </div>
+
+    </div>
+
+    <button class="retry" onclick="drawFortune()">
+      다시 뽑기
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const fortunes = [
+
+  {
+    name: "대길 왈왈이",
+    score: 98,
+    message:
+      "오늘은 왈왈력이 폭발하는 날! 하고 싶었던 일이 있다면 자신 있게 도전해봐요.",
+    color: "OCEAN BLUE",
+    item: "TICKET",
+    power: "★★★★★"
+  },
+
+  {
+    name: "행운 왈왈이",
+    score: 92,
+    message:
+      "생각지도 못했던 곳에서 작은 행운이 찾아올지도 몰라요. 주변을 잘 살펴봐요!",
+    color: "SKY BLUE",
+    item: "CAMERA",
+    power: "★★★★★"
+  },
+
+  {
+    name: "신나는 왈왈이",
+    score: 87,
+    message:
+      "오늘은 좋아하는 걸 마음껏 즐겨도 좋은 날! 왈왈이가 신나는 하루를 응원해요.",
+    color: "YELLOW",
+    item: "MUSIC",
+    power: "★★★★☆"
+  },
+
+  {
+    name: "몽글 왈왈이",
+    score: 82,
+    message:
+      "평범한 순간이 특별한 추억이 될 수 있는 날이에요. 오늘을 천천히 즐겨봐요.",
+    color: "WHITE",
+    item: "PHOTO",
+    power: "★★★★☆"
+  },
+
+  {
+    name: "파도타는 왈왈이",
+    score: 78,
+    message:
+      "예상과 조금 다른 하루가 펼쳐져도 괜찮아요. 흐름을 따라가면 재미있는 일이 생길지도!",
+    color: "DEEP BLUE",
+    item: "MAP",
+    power: "★★★★☆"
+  }
+
+];
+
+
+function drawFortune() {
+
+  const random =
+    Math.floor(Math.random() * fortunes.length);
+
+  const fortune = fortunes[random];
+
+  document.getElementById("fortuneName").innerText =
+    fortune.name;
+
+  document.getElementById("score").innerText =
+    "오늘의 행운지수 " + fortune.score + "%";
+
+  document.getElementById("message").innerText =
+    fortune.message;
+
+  document.getElementById("color").innerText =
+    fortune.color;
+
+  document.getElementById("item").innerText =
+    fortune.item;
+
+  document.getElementById("power").innerText =
+    fortune.power;
+
+  document.getElementById("number").innerText =
+    "NO.0" + (random + 1);
+
+  document.getElementById("startPage").style.display =
+    "none";
+
+  document.getElementById("resultPage").style.display =
+    "block";
+
+  window.scrollTo(0, 0);
+}
+
+</script>
+
+</body>
+</html>
