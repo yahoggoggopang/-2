@@ -1,541 +1,634 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘의 왈왈이 운세</title>
 
-<title>오늘의 왈왈이 운세</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<style>
-* {
-  box-sizing: border-box;
-}
+    body {
+      margin: 0;
+      font-family: Arial, "Apple SD Gothic Neo", sans-serif;
+      background: #9fd8f4;
+      color: #153c65;
+    }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
-               "Noto Sans KR", sans-serif;
-  background: #cfeaff;
-  color: #202020;
-  display: flex;
-  justify-content: center;
-}
+    .page {
+      min-height: 100vh;
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 45px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
-.page {
-  width: 100%;
-  max-width: 430px;
-  min-height: 100vh;
-  padding: 45px 22px;
-  text-align: center;
+      background:
+        radial-gradient(circle at 15% 15%, white 0 25px, transparent 26px),
+        radial-gradient(circle at 25% 15%, white 0 35px, transparent 36px),
+        radial-gradient(circle at 85% 30%, white 0 30px, transparent 31px),
+        radial-gradient(circle at 75% 30%, white 0 22px, transparent 23px),
+        #9fd8f4;
+    }
 
-  background:
-    radial-gradient(circle at -5% 15%, white 0 65px, transparent 67px),
-    radial-gradient(circle at 105% 30%, white 0 85px, transparent 87px),
-    #cfeaff;
-}
+    .small-title {
+      font-size: 13px;
+      letter-spacing: 3px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
 
-/* 상단 */
-.small-title {
-  font-size: 13px;
-  letter-spacing: 3px;
-  font-weight: 700;
-  color: #3478bd;
-  margin-bottom: 8px;
-}
+    .main-title {
+      font-size: 34px;
+      font-weight: 900;
+      text-align: center;
+      margin: 0;
+      line-height: 1.25;
+    }
 
-h1 {
-  margin: 0;
-  font-size: 34px;
-  line-height: 1.25;
-}
+    .subtitle {
+      font-size: 15px;
+      text-align: center;
+      line-height: 1.6;
+      margin: 15px 0 25px;
+    }
 
-.subtitle {
-  margin-top: 12px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: #555;
-}
+    .main-walwal {
+      width: 230px;
+      max-height: 280px;
+      object-fit: contain;
+      margin: 5px 0 25px;
+    }
 
-/* 왈왈이 */
-.walwal {
-  width: 72%;
-  max-width: 280px;
-  margin: 28px auto 18px;
-  display: block;
-}
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 50px;
+      background: #285fa8;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      padding: 17px 20px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #174477;
+    }
 
-/* 버튼 */
-button {
-  border: 0;
-  width: 100%;
-  padding: 17px 20px;
-  border-radius: 18px;
-  background: #428bd4;
-  color: white;
-  font-size: 17px;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 6px 0 #2469ad;
-}
+    button:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #174477;
+    }
 
-button:active {
-  transform: translateY(4px);
-  box-shadow: 0 2px 0 #2469ad;
-}
+    .guide {
+      font-size: 12px;
+      margin-top: 18px;
+      opacity: 0.75;
+    }
 
-.guide {
-  margin-top: 18px;
-  font-size: 12px;
-  color: #6e8ba7;
-}
+    /* 로딩 화면 */
 
-/* 결과 화면 */
-#resultPage {
-  display: none;
-}
+    #loadingPage {
+      display: none;
+    }
 
-.ticket {
-  background: rgba(255,255,255,0.94);
-  border: 3px solid #428bd4;
-  border-radius: 25px;
-  padding: 27px 20px 24px;
-  margin-top: 20px;
-  box-shadow: 0 8px 0 rgba(53,120,187,0.15);
-}
+    .loading-walwal {
+      width: 190px;
+      object-fit: contain;
+      animation: bounce 0.8s infinite alternate;
+    }
 
-.ticket-top {
-  display: flex;
-  justify-content: space-between;
-  color: #428bd4;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
+    @keyframes bounce {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-15px);
+      }
+    }
 
-.fortune-name {
-  font-size: 29px;
-  margin: 20px 0 0;
-}
+    .loading-title {
+      font-size: 28px;
+      font-weight: 900;
+      margin-top: 20px;
+    }
 
-.result-img {
-  width: 65%;
-  max-width: 230px;
-  margin: 15px auto;
-}
+    .loading-text {
+      font-size: 14px;
+      margin-top: 10px;
+    }
 
-.score {
-  font-size: 19px;
-  font-weight: 800;
-  color: #3478bd;
-}
+    .dots::after {
+      content: "";
+      animation: dots 1.2s infinite;
+    }
 
-.message {
-  font-size: 15px;
-  line-height: 1.8;
-  margin: 18px 5px;
-}
+    @keyframes dots {
+      0% { content: ""; }
+      33% { content: "."; }
+      66% { content: ".."; }
+      100% { content: "..."; }
+    }
 
-.info {
-  border-top: 1px dashed #8db7df;
-  border-bottom: 1px dashed #8db7df;
-  margin: 22px 0;
-  padding: 17px 0;
+    /* 결과 화면 */
 
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
+    #resultPage {
+      display: none;
+      padding-top: 25px;
+      padding-bottom: 25px;
+    }
 
-.info div {
-  padding: 0 5px;
-}
+    .ticket {
+      width: 100%;
+      background: #fffaf0;
+      border: 3px solid #285fa8;
+      border-radius: 24px;
+      padding: 25px 20px;
+      text-align: center;
+      box-shadow: 0 8px 0 rgba(24, 68, 119, 0.18);
+    }
 
-.info strong {
-  display: block;
-  font-size: 10px;
-  color: #3478bd;
-  margin-bottom: 7px;
-}
+    .ticket-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-bottom: 1px dashed #285fa8;
+      padding-bottom: 12px;
+    }
 
-.info span {
-  font-size: 13px;
-  font-weight: 700;
-}
+    .today-label {
+      margin-top: 20px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
 
-.retry {
-  margin-top: 20px;
-}
+    .fortune-name {
+      font-size: 27px;
+      font-weight: 900;
+      margin: 7px 0 10px;
+      word-break: keep-all;
+    }
 
-</style>
+    .fortune-image {
+      width: 190px;
+      height: 210px;
+      object-fit: contain;
+      margin: 5px auto;
+    }
+
+    .fortune-message {
+      background: #dff3ff;
+      border-radius: 15px;
+      padding: 16px 13px;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.5;
+      margin: 10px 0 18px;
+      word-break: keep-all;
+    }
+
+    .info-box {
+      border-top: 1px dashed #8bb5d7;
+      padding: 15px 5px;
+    }
+
+    .info-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      font-weight: bold;
+      opacity: 0.7;
+      margin-bottom: 7px;
+    }
+
+    .info-value {
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    .retry {
+      margin-top: 20px;
+    }
+
+    /* 시크릿 레어 */
+
+    .ticket.secret {
+      border-color: #d6a52e;
+      box-shadow: 0 8px 0 rgba(178, 126, 0, 0.2);
+    }
+
+    .ticket.secret .fortune-message {
+      background: #fff0b8;
+    }
+
+    .secret-badge {
+      display: none;
+      margin: 15px auto 0;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #b07900;
+    }
+
+    .ticket.secret .secret-badge {
+      display: block;
+    }
+  </style>
 </head>
-
 
 <body>
 
-<!-- 첫 화면 -->
-<div class="page" id="startPage">
+  <!-- 첫 화면 -->
+  <section id="startPage" class="page">
 
-  <div class="small-title">
-    TO LUCKY ISLAND
-  </div>
+    <div class="small-title">TO LUCKY ISLAND</div>
 
-  <h1>
-    오늘의<br>
-    왈왈이 운세
-  </h1>
+    <h1 class="main-title">
+      오늘의<br>
+      왈왈이 운세
+    </h1>
 
-  <p class="subtitle">
-    오늘 왈왈이가 전해줄<br>
-    행운은 무엇일까요?
-  </p>
-
-  <img src="walwal.png"
-       class="walwal"
-       alt="왈왈이">
-
-  <button onclick="drawFortune()">
-    오늘의 운세 뽑기
-  </button>
-
-  <div class="guide">
-    버튼을 눌러 LUCY ISLAND로 출발하세요!
-  </div>
-
-</div>
-
-
-<!-- 결과 화면 -->
-<div class="page" id="resultPage">
-
-  <div class="small-title">
-    LUCY ISLAND ARRIVAL
-  </div>
-
-  <div class="ticket">
-
-    <div class="ticket-top">
-      <span>TODAY'S WALWAL</span>
-      <span id="number">NO.01</span>
-    </div>
-
-    <h2 class="fortune-name" id="fortuneName">
-      행운 왈왈이
-    </h2>
-
-    <img src="walwal.png"
-         class="result-img"
-         alt="왈왈이">
-
-    <div class="score" id="score">
-      오늘의 행운지수 92%
-    </div>
-
-    <p class="message" id="message">
-      오늘은 생각지도 못했던 곳에서
-      작은 행운이 찾아올지도 몰라요.
+    <p class="subtitle">
+      오늘 공연에서 어떤 왈왈이를<br>
+      만나게 될까요?
     </p>
 
-    <div class="info">
+    <img
+      src="walwal.png"
+      class="main-walwal"
+      alt="왈왈이"
+    >
 
-      <div>
-        <strong>LUCKY COLOR</strong>
-        <span id="color">BLUE</span>
+    <button onclick="startFortune()">
+      오늘의 왈왈이 만나기
+    </button>
+
+    <div class="guide">
+      버튼을 눌러 LUCKY ISLAND로 출발하세요!
+    </div>
+
+  </section>
+
+
+  <!-- 로딩 화면 -->
+  <section id="loadingPage" class="page">
+
+    <div class="small-title">WALWAL FORTUNE</div>
+
+    <img
+      src="walwal.png"
+      class="loading-walwal"
+      alt="왈왈이"
+    >
+
+    <div class="loading-title">
+      두근두근...
+    </div>
+
+    <div class="loading-text">
+      왈왈이가 오늘의 운세를 고르는 중<span class="dots"></span>
+    </div>
+
+  </section>
+
+
+  <!-- 결과 화면 -->
+  <section id="resultPage" class="page">
+
+    <div id="ticket" class="ticket">
+
+      <div class="ticket-top">
+        <span>LUCKY ISLAND ARRIVAL</span>
+        <span id="fortuneNumber">NO.01</span>
       </div>
 
-      <div>
-        <strong>LUCKY ITEM</strong>
-        <span id="item">TICKET</span>
+      <div class="secret-badge">
+        ✦ SECRET RARE ✦
       </div>
 
-      <div>
-        <strong>WALWAL POWER</strong>
-        <span id="power">★★★★★</span>
+      <div class="today-label">
+        TODAY'S WALWAL
+      </div>
+
+      <div
+        id="fortuneName"
+        class="fortune-name">
+      </div>
+
+      <img
+        id="fortuneImage"
+        src="walwal.png"
+        class="fortune-image"
+        alt="오늘의 왈왈이"
+      >
+
+      <div
+        id="fortuneKeyword"
+        class="fortune-message">
+      </div>
+
+      <div class="info-box">
+        <div class="info-label">
+          LUCKY ITEM · 행운의 물건
+        </div>
+
+        <div
+          id="fortuneItem"
+          class="info-value">
+        </div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-label">
+          LUCKY ACTION · 행운의 행동
+        </div>
+
+        <div
+          id="fortuneAction"
+          class="info-value">
+        </div>
       </div>
 
     </div>
 
-    <button class="retry" onclick="drawFortune()">
+    <button
+      class="retry"
+      onclick="startFortune()">
       다시 뽑기
     </button>
 
-  </div>
-
-</div>
-<script>
-
-const normalFortunes = [
-  {
-    number: "01",
-    name: "녜내림 왈왈이",
-    keyword: "녜내림 각!",
-    item: "신예찬 포토카드",
-    action: "누구보다 바이올린 소리에 집중하기",
-    image: "walwal.png"
-  },
-  {
-    number: "02",
-    name: "먹짱 왈왈이",
-    keyword: "간식 나눔의 축복이 끝이 없네",
-    item: "마이쮸",
-    action: "왈왈이들과 간식나눠먹기",
-    image: "walwal.png"
-  },
-  {
-    number: "03",
-    name: "락스타 왈왈이",
-    keyword: "내가 이구역 락스타다",
-    item: "루시 슬로건",
-    action: "오늘만큼은 눈치 보지 않기",
-    image: "walwal.png"
-  },
-  {
-    number: "04",
-    name: "홈마 왈왈이",
-    keyword: "내 최애 인생샷은 내가 책임진다",
-    item: "카메라",
-    action: "마음에 드는 순간 남기기",
-    image: "walwal.png"
-  },
-  {
-    number: "05",
-    name: "텅장 왈왈이",
-    keyword: "굿즈에 눈 먼 사람 나야나",
-    item: "지갑",
-    action: "충동구매 한 번 참기",
-    image: "walwal.png"
-  },
-  {
-    number: "06",
-    name: "지각 왈왈이",
-    keyword: "아 나 조금만 더 빨리 나올걸",
-    item: "시계",
-    action: "평소보다 10분 일찍 움직이기",
-    image: "walwal.png"
-  },
-  {
-    number: "07",
-    name: "최애곡 영접 왈왈이",
-    keyword: "아니이걸해준다고?",
-    item: "이어폰",
-    action: "첫 소절에 집중하기",
-    image: "walwal.png"
-  },
-  {
-    number: "08",
-    name: "벅참주의보 왈왈이",
-    keyword: "하고싶은말은 너무 많은데.. 할수있는말은.. 너무좋아요..",
-    item: "휴대폰 플래시",
-    action: "한 곡은 온전히 눈에 담기",
-    image: "walwal.png"
-  },
-  {
-    number: "09",
-    name: "울보 왈왈이",
-    keyword: "흑ㄱ..급..꿈..루시사랑해..",
-    item: "휴지",
-    action: "낙화듣고울기",
-    image: "walwal.png"
-  },
-  {
-    number: "10",
-    name: "떼창 만렙 왈왈이",
-    keyword: "내버려둬!터지게둬! 이길의 끝따라 뛰어!",
-    item: "짱짱한 성대",
-    action: "떼창 피맛날때까지하기",
-    image: "walwal.png"
-  },
-  {
-    number: "11",
-    name: "체력 방전 왈왈이",
-    keyword: "나이제더이상 영크크왈왈이가 아니라..",
-    item: "물",
-    action: "중간중간 체력 아끼기",
-    image: "walwal.png"
-  },
-  {
-    number: "13",
-    name: "엽내림 왈왈이",
-    keyword: "엽내림 각!",
-    item: "최상엽 포토카드",
-    action: "카메라 내리고 아이컨택!",
-    image: "walwal.png"
-  },
-  {
-    number: "14",
-    name: "원내림 왈왈이",
-    keyword: "원내림 각!",
-    item: "조원상 포토카드",
-    action: "너굴대장 말 잘듣기",
-    image: "walwal.png"
-  },
-  {
-    number: "15",
-    name: "광내림 왈왈이",
-    keyword: "광내림 각!",
-    item: "신광일 포토카드",
-    action: "신나면 마음껏 즐기기",
-    image: "walwal.png"
-  },
-  {
-    number: "16",
-    name: "친구좋아 왈왈이",
-    keyword: "우리는 같은 편이잖아!",
-    item: "루시를 사랑하는 마음",
-    action: "옆 사람과 친해지기",
-    image: "walwal.png"
-  },
-  {
-    number: "17",
-    name: "뜨거 왈왈이",
-    keyword: "오늘 여기서 제일 핫한 왈왈이",
-    item: "부채",
-    action: "오늘의 자신감 장착하기",
-    image: "walwal.png"
-  },
-  {
-    number: "18",
-    name: "구구절절 왈왈이",
-    keyword: "콘서트 끝나고서부터가 진짜다.",
-    item: "뚱뚱한 트윗글",
-    action: "좋았던 순간 마음껏 떠들기",
-    image: "walwal.png"
-  },
-  {
-    number: "19",
-    name: "아니근데진짜! 왈왈이",
-    keyword: "아니근데진짜! 너예쁘다니까!",
-    item: "거울",
-    action: "오늘만큼은 내가 제일 예쁘다고 생각하기",
-    image: "walwal.png"
-  }
-];
+  </section>
 
 
-/* 시크릿 레어는 일반 목록과 따로 둠 */
-const secretFortune = {
-  number: "12",
-  name: "시크릿 레어 행운 왈왈이",
-  keyword: "걸어다니는 행운",
-  item: "네잎클로버",
-  action: "오늘의 순간을 믿기",
-  image: "walwal.png",
-  secret: true
-};
+  <script>
+
+    const normalFortunes = [
+
+      {
+        number: "01",
+        name: "녜내림 왈왈이",
+        keyword: "녜내림 각!",
+        item: "신예찬 포토카드",
+        action: "누구보다 바이올린 소리에 집중하기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "02",
+        name: "먹짱 왈왈이",
+        keyword: "간식 나눔의 축복이 끝이 없네",
+        item: "마이쮸",
+        action: "왈왈이들과 간식나눠먹기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "03",
+        name: "락스타 왈왈이",
+        keyword: "내가 이구역 락스타다",
+        item: "루시 슬로건",
+        action: "오늘만큼은 눈치 보지 않기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "04",
+        name: "홈마 왈왈이",
+        keyword: "내 최애 인생샷은 내가 책임진다",
+        item: "카메라",
+        action: "마음에 드는 순간 남기기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "05",
+        name: "텅장 왈왈이",
+        keyword: "굿즈에 눈 먼 사람 나야나",
+        item: "지갑",
+        action: "충동구매 한 번 참기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "06",
+        name: "지각 왈왈이",
+        keyword: "아 나 조금만 더 빨리 나올걸",
+        item: "시계",
+        action: "평소보다 10분 일찍 움직이기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "07",
+        name: "최애곡 영접",
+        keyword: "아니이걸해준다고?",
+        item: "이어폰",
+        action: "첫 소절에 집중하기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "08",
+        name: "벅참주의보",
+        keyword: "하고싶은말은 너무 많은데.. 할수 있는말은..너무좋아요..",
+        item: "휴대폰 플래시",
+        action: "한 곡은 온전히 눈에 담기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "09",
+        name: "울보 왈왈이",
+        keyword: "흑ㄱ..급..꿈..루시사랑해..",
+        item: "휴지",
+        action: "낙화듣고울기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "10",
+        name: "떼창 만렙",
+        keyword: "내버려둬!터지게둬! 이길의 끝따라 뛰어!",
+        item: "짱짱한 성대",
+        action: "목죽음 떼창 피맛날때까지하기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "11",
+        name: "체력 방전",
+        keyword: "나이제더이상 영크크왈왈이가 아니라..",
+        item: "물",
+        action: "중간중간 체력 아끼기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "13",
+        name: "엽내림 왈왈이",
+        keyword: "엽내림 각!",
+        item: "최상엽 포토카드",
+        action: "카메라 내리고 아이컨택!",
+        image: "walwal.png"
+      },
+
+      {
+        number: "14",
+        name: "원내림 왈왈이",
+        keyword: "원내림 각!",
+        item: "조원상 포토카드",
+        action: "너굴대장 말 잘듣기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "15",
+        name: "광내림 왈왈이",
+        keyword: "광내림 각!",
+        item: "신광일 포토카드",
+        action: "신나면 마음껏 즐기기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "16",
+        name: "친구좋아 왈왈이",
+        keyword: "우리는 같은 편이잖아!",
+        item: "루시를 사랑하는 마음",
+        action: "옆 사람과 친해지기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "17",
+        name: "뜨거 왈왈이",
+        keyword: "오늘 여기서 제일 핫한 왈왈이",
+        item: "부채",
+        action: "오늘의 자신감 장착하기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "18",
+        name: "구구절절 왈왈이",
+        keyword: "콘서트 끝나고서부터가 진짜다.",
+        item: "뚱뚱한 트윗글",
+        action: "좋았던 순간 마음껏 떠들기",
+        image: "walwal.png"
+      },
+
+      {
+        number: "19",
+        name: "아니근데진짜! 왈왈이",
+        keyword: "아니근데진짜! 너예쁘다니까!",
+        item: "거울",
+        action: "오늘만큼은 내가 제일 예쁘다고 생각하기",
+        image: "walwal.png"
+      }
+
+    ];
 
 
-/* 운세 뽑기 시작 */
-function startFortune() {
+    /* 시크릿 레어 */
 
-  document.getElementById("startPage").style.display = "none";
-  document.getElementById("resultPage").style.display = "none";
+    const secretFortune = {
 
-  const loading =
-    document.getElementById("loadingPage");
+      number: "12",
+      name: "시크릿 레어 행운",
+      keyword: "걸어다니는 행운",
+      item: "네잎클로버",
+      action: "오늘의 순간을 믿기",
+      image: "walwal.png",
+      secret: true
 
-  loading.style.display = "flex";
-
-
-  /*
-    2.2초 동안
-    '왈왈이가 오늘의 운세를 고르는 중...'
-    화면 보여주기
-  */
-
-  setTimeout(() => {
-
-    let selected;
+    };
 
 
-    /*
-      시크릿 레어 확률 = 2%
+    function startFortune() {
 
-      Math.random()은
-      0 ~ 1 사이 숫자를 랜덤 생성함.
-    */
+      document.getElementById("startPage").style.display = "none";
+      document.getElementById("resultPage").style.display = "none";
+      document.getElementById("loadingPage").style.display = "flex";
 
-    const secretChance = Math.random();
+      window.scrollTo(0, 0);
 
+      setTimeout(function () {
 
-    if (secretChance < 0.02) {
+        let fortune;
 
-      selected = secretFortune;
+        /* 시크릿 레어 확률 2% */
+        if (Math.random() < 0.02) {
 
-    } else {
+          fortune = secretFortune;
 
-      const randomIndex =
-        Math.floor(
-          Math.random() * normalFortunes.length
-        );
+        } else {
 
-      selected =
-        normalFortunes[randomIndex];
+          const randomIndex =
+            Math.floor(Math.random() * normalFortunes.length);
+
+          fortune = normalFortunes[randomIndex];
+
+        }
+
+        showFortune(fortune);
+
+      }, 2200);
 
     }
 
 
-    showFortune(selected);
+    function showFortune(fortune) {
 
-  }, 2200);
+      document.getElementById("loadingPage").style.display = "none";
 
-}
+      document.getElementById("fortuneNumber").textContent =
+        "NO." + fortune.number;
 
+      document.getElementById("fortuneName").textContent =
+        fortune.name;
 
-/* 결과 보여주기 */
-function showFortune(fortune) {
+      document.getElementById("fortuneKeyword").textContent =
+        fortune.keyword;
 
-  document.getElementById("loadingPage").style.display =
-    "none";
+      document.getElementById("fortuneItem").textContent =
+        fortune.item;
 
-  document.getElementById("resultPage").style.display =
-    "block";
+      document.getElementById("fortuneAction").textContent =
+        fortune.action;
 
-
-  document.getElementById("fortuneNumber").innerText =
-    "NO." + fortune.number;
-
-  document.getElementById("fortuneName").innerText =
-    fortune.name;
-
-  document.getElementById("fortuneKeyword").innerText =
-    fortune.keyword;
-
-  document.getElementById("fortuneItem").innerText =
-    fortune.item;
-
-  document.getElementById("fortuneAction").innerText =
-    fortune.action;
-
-  document.getElementById("fortuneImage").src =
-    fortune.image;
+      document.getElementById("fortuneImage").src =
+        fortune.image;
 
 
-  /* 시크릿 레어 디자인 */
-  const ticket =
-    document.getElementById("ticket");
+      const ticket =
+        document.getElementById("ticket");
 
-  if (fortune.secret) {
+      if (fortune.secret) {
 
-    ticket.classList.add("secret");
+        ticket.classList.add("secret");
 
-  } else {
+      } else {
 
-    ticket.classList.remove("secret");
+        ticket.classList.remove("secret");
 
-  }
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-}
-
-</script>
+      }
 
 
+      document.getElementById("resultPage").style.display =
+        "flex";
 
+      window.scrollTo(0, 0);
 
+    }
+
+  </script>
 
 </body>
 </html>
