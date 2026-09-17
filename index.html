@@ -261,103 +261,281 @@ button:active {
   </div>
 
 </div>
-
-
 <script>
 
-const fortunes = [
-
+const normalFortunes = [
   {
-    name: "대길 왈왈이",
-    score: 98,
-    message:
-      "오늘은 왈왈력이 폭발하는 날! 하고 싶었던 일이 있다면 자신 있게 도전해봐요.",
-    color: "OCEAN BLUE",
-    item: "TICKET",
-    power: "★★★★★"
+    number: "01",
+    name: "녜내림 왈왈이",
+    keyword: "녜내림 각!",
+    item: "신예찬 포토카드",
+    action: "누구보다 바이올린 소리에 집중하기",
+    image: "walwal.png"
   },
-
   {
-    name: "행운 왈왈이",
-    score: 92,
-    message:
-      "생각지도 못했던 곳에서 작은 행운이 찾아올지도 몰라요. 주변을 잘 살펴봐요!",
-    color: "SKY BLUE",
-    item: "CAMERA",
-    power: "★★★★★"
+    number: "02",
+    name: "먹짱 왈왈이",
+    keyword: "간식 나눔의 축복이 끝이 없네",
+    item: "마이쮸",
+    action: "왈왈이들과 간식나눠먹기",
+    image: "walwal.png"
   },
-
   {
-    name: "신나는 왈왈이",
-    score: 87,
-    message:
-      "오늘은 좋아하는 걸 마음껏 즐겨도 좋은 날! 왈왈이가 신나는 하루를 응원해요.",
-    color: "YELLOW",
-    item: "MUSIC",
-    power: "★★★★☆"
+    number: "03",
+    name: "락스타 왈왈이",
+    keyword: "내가 이구역 락스타다",
+    item: "루시 슬로건",
+    action: "오늘만큼은 눈치 보지 않기",
+    image: "walwal.png"
   },
-
   {
-    name: "몽글 왈왈이",
-    score: 82,
-    message:
-      "평범한 순간이 특별한 추억이 될 수 있는 날이에요. 오늘을 천천히 즐겨봐요.",
-    color: "WHITE",
-    item: "PHOTO",
-    power: "★★★★☆"
+    number: "04",
+    name: "홈마 왈왈이",
+    keyword: "내 최애 인생샷은 내가 책임진다",
+    item: "카메라",
+    action: "마음에 드는 순간 남기기",
+    image: "walwal.png"
   },
-
   {
-    name: "파도타는 왈왈이",
-    score: 78,
-    message:
-      "예상과 조금 다른 하루가 펼쳐져도 괜찮아요. 흐름을 따라가면 재미있는 일이 생길지도!",
-    color: "DEEP BLUE",
-    item: "MAP",
-    power: "★★★★☆"
+    number: "05",
+    name: "텅장 왈왈이",
+    keyword: "굿즈에 눈 먼 사람 나야나",
+    item: "지갑",
+    action: "충동구매 한 번 참기",
+    image: "walwal.png"
+  },
+  {
+    number: "06",
+    name: "지각 왈왈이",
+    keyword: "아 나 조금만 더 빨리 나올걸",
+    item: "시계",
+    action: "평소보다 10분 일찍 움직이기",
+    image: "walwal.png"
+  },
+  {
+    number: "07",
+    name: "최애곡 영접 왈왈이",
+    keyword: "아니이걸해준다고?",
+    item: "이어폰",
+    action: "첫 소절에 집중하기",
+    image: "walwal.png"
+  },
+  {
+    number: "08",
+    name: "벅참주의보 왈왈이",
+    keyword: "하고싶은말은 너무 많은데.. 할수있는말은.. 너무좋아요..",
+    item: "휴대폰 플래시",
+    action: "한 곡은 온전히 눈에 담기",
+    image: "walwal.png"
+  },
+  {
+    number: "09",
+    name: "울보 왈왈이",
+    keyword: "흑ㄱ..급..꿈..루시사랑해..",
+    item: "휴지",
+    action: "낙화듣고울기",
+    image: "walwal.png"
+  },
+  {
+    number: "10",
+    name: "떼창 만렙 왈왈이",
+    keyword: "내버려둬!터지게둬! 이길의 끝따라 뛰어!",
+    item: "짱짱한 성대",
+    action: "목죽음 떼창 피맛날때까지하기",
+    image: "walwal.png"
+  },
+  {
+    number: "11",
+    name: "체력 방전 왈왈이",
+    keyword: "나이제더이상 영크크왈왈이가 아니라..",
+    item: "물",
+    action: "중간중간 체력 아끼기",
+    image: "walwal.png"
+  },
+  {
+    number: "13",
+    name: "엽내림 왈왈이",
+    keyword: "엽내림 각!",
+    item: "최상엽 포토카드",
+    action: "카메라 내리고 아이컨택!",
+    image: "walwal.png"
+  },
+  {
+    number: "14",
+    name: "원내림 왈왈이",
+    keyword: "원내림 각!",
+    item: "조원상 포토카드",
+    action: "너굴대장 말 잘듣기",
+    image: "walwal.png"
+  },
+  {
+    number: "15",
+    name: "광내림 왈왈이",
+    keyword: "광내림 각!",
+    item: "신광일 포토카드",
+    action: "신나면 마음껏 즐기기",
+    image: "walwal.png"
+  },
+  {
+    number: "16",
+    name: "친구좋아 왈왈이",
+    keyword: "우리는 같은 편이잖아!",
+    item: "루시를 사랑하는 마음",
+    action: "옆 사람과 친해지기",
+    image: "walwal.png"
+  },
+  {
+    number: "17",
+    name: "뜨거 왈왈이",
+    keyword: "오늘 여기서 제일 핫한 왈왈이",
+    item: "부채",
+    action: "오늘의 자신감 장착하기",
+    image: "walwal.png"
+  },
+  {
+    number: "18",
+    name: "구구절절 왈왈이",
+    keyword: "콘서트 끝나고서부터가 진짜다.",
+    item: "뚱뚱한 트윗글",
+    action: "좋았던 순간 마음껏 떠들기",
+    image: "walwal.png"
+  },
+  {
+    number: "19",
+    name: "아니근데진짜! 왈왈이",
+    keyword: "아니근데진짜! 너예쁘다니까!",
+    item: "거울",
+    action: "오늘만큼은 내가 제일 예쁘다고 생각하기",
+    image: "walwal.png"
   }
-
 ];
 
 
-function drawFortune() {
+/* 시크릿 레어는 일반 목록과 따로 둠 */
+const secretFortune = {
+  number: "12",
+  name: "시크릿 레어 행운 왈왈이",
+  keyword: "걸어다니는 행운",
+  item: "네잎클로버",
+  action: "오늘의 순간을 믿기",
+  image: "walwal.png",
+  secret: true
+};
 
-  const random =
-    Math.floor(Math.random() * fortunes.length);
 
-  const fortune = fortunes[random];
+/* 운세 뽑기 시작 */
+function startFortune() {
 
-  document.getElementById("fortuneName").innerText =
-    fortune.name;
+  document.getElementById("startPage").style.display = "none";
+  document.getElementById("resultPage").style.display = "none";
 
-  document.getElementById("score").innerText =
-    "오늘의 행운지수 " + fortune.score + "%";
+  const loading =
+    document.getElementById("loadingPage");
 
-  document.getElementById("message").innerText =
-    fortune.message;
+  loading.style.display = "flex";
 
-  document.getElementById("color").innerText =
-    fortune.color;
 
-  document.getElementById("item").innerText =
-    fortune.item;
+  /*
+    2.2초 동안
+    '왈왈이가 오늘의 운세를 고르는 중...'
+    화면 보여주기
+  */
 
-  document.getElementById("power").innerText =
-    fortune.power;
+  setTimeout(() => {
 
-  document.getElementById("number").innerText =
-    "NO.0" + (random + 1);
+    let selected;
 
-  document.getElementById("startPage").style.display =
+
+    /*
+      시크릿 레어 확률 = 2%
+
+      Math.random()은
+      0 ~ 1 사이 숫자를 랜덤 생성함.
+    */
+
+    const secretChance = Math.random();
+
+
+    if (secretChance < 0.02) {
+
+      selected = secretFortune;
+
+    } else {
+
+      const randomIndex =
+        Math.floor(
+          Math.random() * normalFortunes.length
+        );
+
+      selected =
+        normalFortunes[randomIndex];
+
+    }
+
+
+    showFortune(selected);
+
+  }, 2200);
+
+}
+
+
+/* 결과 보여주기 */
+function showFortune(fortune) {
+
+  document.getElementById("loadingPage").style.display =
     "none";
 
   document.getElementById("resultPage").style.display =
     "block";
 
-  window.scrollTo(0, 0);
+
+  document.getElementById("fortuneNumber").innerText =
+    "NO." + fortune.number;
+
+  document.getElementById("fortuneName").innerText =
+    fortune.name;
+
+  document.getElementById("fortuneKeyword").innerText =
+    fortune.keyword;
+
+  document.getElementById("fortuneItem").innerText =
+    fortune.item;
+
+  document.getElementById("fortuneAction").innerText =
+    fortune.action;
+
+  document.getElementById("fortuneImage").src =
+    fortune.image;
+
+
+  /* 시크릿 레어 디자인 */
+  const ticket =
+    document.getElementById("ticket");
+
+  if (fortune.secret) {
+
+    ticket.classList.add("secret");
+
+  } else {
+
+    ticket.classList.remove("secret");
+
+  }
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
 }
 
 </script>
+
+
+
+
 
 </body>
 </html>
